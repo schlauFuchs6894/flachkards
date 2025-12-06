@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Alpen – Vokabeltrainer</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #e8eef3;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+  }
+  .container {
+    max-width: 600px;
+    width: 100%;
+    text-align: center;
+  }
+  .card {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 22px;
+    min-height: 90px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .card:hover {
+    transform: scale(1.02);
+  }
+  .buttons {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+  button {
+    padding: 10px 18px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  .good { background: #3fa34d; color: white; }
+  .bad { background: #d34b4b; color: white; }
+  .next { background: #3d8ed1; color: white; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>Alpen – Vokabeltrainer</h1>
+<div id="card" class="card">Klicke für die erste Karte…</div>
+
+<div class="buttons">
+  <button class="good" onclick="markGood()">Richtig</button>
+  <button class="bad" onclick="markBad()">Falsch</button>
+  <button class="next" onclick="nextCard()">Nächste</button>
+</div>
+
+<p id="score"></p>
+
+</div>
+
+<script>
+const cards = [
+  {q:"Alpen", a:"Alps"},
+  {q:"in der Touristeninformation", a:"at the tourist office"},
+  {q:"Wähle/Wählen Sie das aus, was dich/Sie interessiert.", a:"Choose the things that interest you."},
+  {q:"das Matterhorn besteigen", a:"climb the Matterhorn"},
+  {q:"klettern", a:"climbing"},
+  {q:"vergleichen", a:"compare"},
+  {q:"leicht/schwer zu lernen", a:"easy/difficult to learn"},
+  {q:"ein Picknick geniessen", a:"enjoy a picnic"},
+  {q:"berühmtes Reiseziel", a:"famous destination"},
+  {q:"Wandern", a:"hiking / walking"},
+  {q:"ein Boot mieten", a:"hire a boat"},
+  {q:"Ferienregion", a:"holiday region"},
+  {q:"Witz", a:"joke"},
+  {q:"Karte der Schweiz", a:"map of Switzerland"},
+  {q:"Mountainbike-Fahren", a:"mountain biking"},
+  {q:"Skifahren abseits der Piste", a:"off-piste skiing"},
+  {q:"Gleitschirmfliegen", a:"paragliding"},
+  {q:"Teile vom Kanton ...", a:"parts of the canton ..."},
+  {q:"(Telefon-) Anruf", a:"phone call"},
+  {q:"Bewerte/Bewerten Sie sie von 1 bis 10.", a:"Rate them from 1 to 10."},
+  {q:"ausruhen, ausspannen", a:"relax"},
+  {q:"snowboarden", a:"snowboarding"},
+  {q:"Sortiere/Sortieren Sie die Sportarten nach Kategorien.", a:"Sort the sports into categories."},
+  {q:"Sommer/Winter", a:"summer / winter"},
+  {q:"schwimmen", a:"swimming"},
+  {q:"Die Region ... besteht aus dem Kanton ...", a:"The region of ... consists of the canton of ..."},
+  {q:"die ganze Familie", a:"the whole family"},
+  {q:"Dinge, die man machen kann", a:"things to do"},
+  {q:"diesen Nachmittag", a:"this afternoon"},
+  {q:"Schlittenfahren", a:"tobogganing"},
+  {q:"morgen", a:"tomorrow"},
+  {q:"Touristenattraktion", a:"tourist attraction"},
+  {q:"einen Seilpark besuchen", a:"visit a rope park"},
+  {q:"Welche Aktivitäten hast du gemacht?", a:"What activities have you done?"},
+  {q:"Wer nimmt das Gespräch entgegen?", a:"Who is answering the phone?"},
+  {q:"Wer ruft an?", a:"Who is calling?"}
+];
+
+let current = null;
+let showingAnswer = false;
+let scoreGood = 0;
+let scoreBad = 0;
+
+const cardEl = document.getElementById("card");
+const scoreEl = document.getElementById("score");
+
+function updateScore() {
+  scoreEl.textContent = `Richtig: ${scoreGood} | Falsch: ${scoreBad}`;
+}
+
+function nextCard() {
+  current = cards[Math.floor(Math.random() * cards.length)];
+  showingAnswer = false;
+  cardEl.textContent = current.q;
+}
+
+cardEl.addEventListener("click", () => {
+  if (!current) return;
+  showingAnswer = !showingAnswer;
+  cardEl.textContent = showingAnswer ? current.a : current.q;
+});
+
+function markGood() {
+  if (!current) return;
+  scoreGood++;
+  updateScore();
+  nextCard();
+}
+
+function markBad() {
+  if (!current) return;
+  scoreBad++;
+  updateScore();
+  nextCard();
+}
+
+updateScore();
+</script>
+
+</body>
+</html>
